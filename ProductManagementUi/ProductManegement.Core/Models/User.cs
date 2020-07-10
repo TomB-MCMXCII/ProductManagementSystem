@@ -8,8 +8,6 @@ namespace ProductManegement.Core.Models
     public class User
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string LastName { get; set; }
         [EmailAddress(ErrorMessage = "The Email Address is not valid")]
         [Required(ErrorMessage = "Please enter an email address.")]
         public string Email { get; set; }
