@@ -1,0 +1,60 @@
+﻿@page
+@model ProductManagementUi.Pages.Products_adminModel
+@{
+    ViewData["Title"] = "Products_admin";
+}
+
+
+    <form class="form-addProduct" method="post">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="inputEmail" class="sr-only">Title</label>
+        <input type="text" id="inputTitle" class="form-control" placeholder="Title" required autofocus asp-for="Product.Title">
+        <label for="inputPassword" class="sr-only">Quantity</label>
+        <input type="text" id="inputQuantity" class="form-control" placeholder="Quantity" required asp-for="Product.Quantity">
+        <label for="inputPassword" class="sr-only">Price</label>
+        <input type="text" id="inputPassword" class="form-control" placeholder="Password" required asp-for="Product.Price">
+        @Html.ValidationSummary(false)
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+    </form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a>ID </a>
+            </th>
+            <th>
+                <a>Title</a>
+            </th>
+            <th>
+                <a>Quntity </a>
+            </th>
+            <th>
+                <a>Price</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
