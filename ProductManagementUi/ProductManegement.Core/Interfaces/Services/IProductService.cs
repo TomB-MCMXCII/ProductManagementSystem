@@ -6,5 +6,6 @@ namespace ProductManagement.Core
     public interface IProductService
     {
         ICollection<Product> GetProducts();
+        void AddProduct(string title, int quantity, decimal price);
     }
 }

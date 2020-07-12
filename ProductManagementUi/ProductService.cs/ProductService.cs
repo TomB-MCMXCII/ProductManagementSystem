@@ -4,6 +4,7 @@ using ProductManegement.Core.Interfaces;
 using ProductManegement.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace ProductManagement.Core
@@ -21,6 +22,18 @@ namespace ProductManagement.Core
         {
             var products = _context.Products.OrderBy(x => x.Id);
             return products.ToList<Product>();
+        }
+
+        public void AddProduct(string title, int quantity, decimal price)
+        {
+            var product = new Product()
+            {
+                Title = title,
+                Quantity = quantity,
+                Price = price
+            };
+            _context.Products.Add(product);
+            _context.SaveChanges();
         }
     }
 }
