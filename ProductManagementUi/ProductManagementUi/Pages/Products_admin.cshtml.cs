@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProductManagement.Core;
@@ -13,7 +9,7 @@ namespace ProductManagementUi.Pages
     public class Products_adminModel : PageModel
     {
         [BindProperty]
-        public AdminViewModel ViewModel { get; set; }
+        public AdminViewModel ViewModel { get; }
         private IProductService _productService { get; set; }
  
 
@@ -21,18 +17,19 @@ namespace ProductManagementUi.Pages
         {
             _productService = productService;
             ViewModel = new AdminViewModel();
+            ViewModel.Products = _productService.GetProducts();
         }
         public void OnGet()
         {
-            ViewModel.Products = new List<Product>();
-            ViewModel.Products = _productService.GetProducts();
+            
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
             if (ModelState.IsValid == false)
             {
-                
+                ModelState.AddModelError("", "Error");
+                return Page();
             }
             else
             {
@@ -40,7 +37,9 @@ namespace ProductManagementUi.Pages
                 var quantity = int.Parse(ModelState["ViewModel.Product.Quantity"].RawValue.ToString());
                 var price = decimal.Parse(ModelState["ViewModel.Product.Price"].RawValue.ToString());
                 _productService.AddProduct(title,quantity,price);
-                ViewModel.Products = _productService.GetProducts();
+
+                return RedirectToPage("./Products_admin");
+
             }
         }
        
