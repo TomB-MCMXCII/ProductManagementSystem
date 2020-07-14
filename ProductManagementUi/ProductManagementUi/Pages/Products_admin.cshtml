@@ -6,13 +6,13 @@
 
 
     <form class="form-addProduct" method="post">
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Add product</h1>
         <label for="inputEmail" class="sr-only">Title</label>
         <input type="text" id="inputTitle" class="form-control" placeholder="Title" required autofocus asp-for="ViewModel.Product.Title">
         <label for="inputPassword" class="sr-only">Quantity</label>
         <input type="text" id="inputQuantity" class="form-control" placeholder="Quantity" required asp-for="ViewModel.Product.Quantity">
         <label for="inputPassword" class="sr-only">Price</label>
-        <input type="text" id="inputPassword" class="form-control" placeholder="Password" required asp-for="ViewModel.Product.Price">
+        <input type="number" step="0.01" id="inputPrice" class="form-control" placeholder="Password" required asp-for="ViewModel.Product.Price">
         @Html.ValidationSummary(false)
         <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
     </form>
@@ -50,8 +50,10 @@
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    <form class="form-deleteProduct" method="post">
+                        <button type="submit" asp-page-handler="delete" asp-route-id="@item.Id">Delete</button>
+                        <button type="submit" asp-page="EditProduct" asp-route-id="@item.Id" asp-route-title="@item.Title" asp-route-price="@item.Price" asp-route-quantity="@item.Quantity">Edit</button>
+                    </form>
                 </td>
             </tr>
         }

@@ -1,0 +1,20 @@
+﻿@page
+@model ProductManagementUi.Pages.EditProductModel
+@{
+    ViewData["Title"] = "EditProduct";
+}
+
+    <form method="post">
+        <h1 class="h3 mb-3 font-weight-normal">Edit product</h1>
+        <label for="Title" >Id</label><br>
+        <input type="text" id="inputId" class="form-control" required readonly asp-for="Product.Id">
+        <label for="Title" >Title</label><br>
+        <input type="text" id="inputTitle" class="form-control" required autofocus asp-for="Product.Title">
+        <label for="Quantity" >Quantity</label><br>
+        <input type="text" id="inputQuantity" class="form-control" required asp-for="Product.Quantity">
+        <label for="Price" >Price</label><br>
+        <input type="text" id="inputPrice" class="form-control" required asp-for="Product.Price">
+        @Html.ValidationSummary(false)
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Save</button>
+    </form>
+

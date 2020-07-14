@@ -35,5 +35,19 @@ namespace ProductManagement.Core
             _context.Products.Add(product);
             _context.SaveChanges();
         }
+
+        public void DeleteProduct(int id)
+        {
+            var product = _context.Products.Find(id);
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+        }
+
+        public Product GetById(int id)
+        {
+            var product = _context.Products.Find(id);
+            return product;
+        }
+
     }
 }

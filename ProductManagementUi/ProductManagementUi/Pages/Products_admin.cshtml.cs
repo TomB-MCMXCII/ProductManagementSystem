@@ -28,7 +28,7 @@ namespace ProductManagementUi.Pages
         {
             if (ModelState.IsValid == false)
             {
-                ModelState.AddModelError("", "Error");
+                
                 return Page();
             }
             else
@@ -42,6 +42,12 @@ namespace ProductManagementUi.Pages
 
             }
         }
-       
+
+        public IActionResult OnPostDelete(int id)
+        {
+            _productService.DeleteProduct(id);
+            return RedirectToPage("./Products_admin");
+        }
+
     }
 }

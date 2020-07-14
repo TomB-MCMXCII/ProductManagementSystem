@@ -7,5 +7,7 @@ namespace ProductManagement.Core
     {
         ICollection<Product> GetProducts();
         void AddProduct(string title, int quantity, decimal price);
+        void DeleteProduct(int id);
+        Product GetById(int id);
     }
 }
