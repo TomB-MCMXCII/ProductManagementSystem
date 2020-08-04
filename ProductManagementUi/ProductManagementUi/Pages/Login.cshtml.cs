@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -36,6 +37,9 @@ namespace ProductManagementUi.Pages
 
                 if (_userService.UserExists(email, password))
                 {
+                    HttpContext.Session.SetString("UserId", _userService.GetUser(email).Id.ToString());
+                    HttpContext.Session.SetString("IsAdmin", _userService.GetUser(email).IsAdmin.ToString());
+
                     if (_userService.IsAdmin(email, password))
                     {
                         return RedirectToPage("./Products_admin");

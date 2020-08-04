@@ -48,6 +48,16 @@ namespace ProductManagement.Core
             var product = _context.Products.Find(id);
             return product;
         }
+        public void Update(string id, string title, string quantity, string price)
+        {
+            var product = _context.Products.Find(int.Parse(id));
+            product.Title = title;
+            product.Quantity = int.Parse(quantity);
+            product.Price = decimal.Parse(price);
+
+            _context.Products.Update(product);
+            _context.SaveChanges();
+        }
 
     }
 }

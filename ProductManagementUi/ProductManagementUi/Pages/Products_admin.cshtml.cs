@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProductManagement.Core;
@@ -9,19 +10,25 @@ namespace ProductManagementUi.Pages
     public class Products_adminModel : PageModel
     {
         [BindProperty]
-        public AdminViewModel ViewModel { get; }
+        public Product Product { get; set; }
+        public ICollection<Product> Products { get; set; }
         private IProductService _productService { get; set; }
  
 
         public Products_adminModel(IProductService productService)
         {
             _productService = productService;
-            ViewModel = new AdminViewModel();
-            ViewModel.Products = _productService.GetProducts();
-        }
-        public void OnGet()
-        {
             
+        }
+        public IActionResult OnGet()
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            if(userId == null)
+            {
+                return RedirectToPage("./NotLogged");
+            }
+            Products = _productService.GetProducts();
+            return Page();
         }
 
         public IActionResult OnPost()
@@ -33,9 +40,9 @@ namespace ProductManagementUi.Pages
             }
             else
             {
-                var title = ModelState["ViewModel.Product.Title"].RawValue.ToString();
-                var quantity = int.Parse(ModelState["ViewModel.Product.Quantity"].RawValue.ToString());
-                var price = decimal.Parse(ModelState["ViewModel.Product.Price"].RawValue.ToString());
+                var title = ModelState["Product.Title"].RawValue.ToString();
+                var quantity = int.Parse(ModelState["Product.Quantity"].RawValue.ToString());
+                var price = decimal.Parse(ModelState["Product.Price"].RawValue.ToString());
                 _productService.AddProduct(title,quantity,price);
 
                 return RedirectToPage("./Products_admin");

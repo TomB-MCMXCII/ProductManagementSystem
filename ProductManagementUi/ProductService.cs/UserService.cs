@@ -52,5 +52,21 @@ namespace ProductManagement.Service
             }
             return true;
         }
+        public User GetUser(string email)
+        {
+            var user = _context.Users.Where(x => x.Email == email).FirstOrDefault();
+            return user;
+        }
+        public void AddUser(string email, string password, bool isAdmin)
+        {
+            var newUser = new User()
+            {
+                Email = email,
+                Password = password,
+                IsAdmin = isAdmin
+            };
+            _context.Users.Add(newUser);
+            _context.SaveChanges();
+        }
     }
 }

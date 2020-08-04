@@ -20,6 +20,21 @@ namespace ProductManagementUi.Pages
             _productService = productService;
 
         }
+
+        public IActionResult OnPostUpdate()
+        {
+            if (ModelState.IsValid)
+            {
+                var id = ModelState["Product.Id"].RawValue.ToString();
+                var title = ModelState["Product.Title"].RawValue.ToString();
+                var quantity = ModelState["Product.Quantity"].RawValue.ToString();
+                var price = ModelState["Product.Price"].RawValue.ToString();
+
+                _productService.Update(id, title, quantity, price);
+                return RedirectToPage("./Products_admin");
+            }
+            return Page();
+        }
        
     }
 }

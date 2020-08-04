@@ -9,5 +9,6 @@ namespace ProductManagement.Core
         void AddProduct(string title, int quantity, decimal price);
         void DeleteProduct(int id);
         Product GetById(int id);
+        void Update(string id, string title, string quantity, string price);
     }
 }

@@ -1,9 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ProductManagementUi</title>
+    <title>@ViewData["Title"] - ProductManagement</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -21,9 +23,29 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Login">Login</a>
-                        </li>
+                        @{
+                            var userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
+                            var isAdmin = bool.TryParse(HttpContextAccessor.HttpContext.Session.GetString("IsAdmin"),out bool result);
+
+                            if (userId != null)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Products_admin">Products</a>
+                                </li>
+                            }
+                            if (userId == null)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Login">Login</a>
+                                </li>
+                            }
+                            if (isAdmin)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Register">Register user</a>
+                                </li>
+                            }
+                         }
                     </ul>
                 </div>
             </div>
