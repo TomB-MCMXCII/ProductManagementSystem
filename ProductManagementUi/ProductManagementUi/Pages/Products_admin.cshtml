@@ -7,11 +7,11 @@
 
     <form class="form-addProduct" method="post">
         <h1 class="h3 mb-3 font-weight-normal">Add product</h1>
-        <label for="inputEmail">Title</label>
+        <label for="inputTitle">Title</label>
         <input type="text" id="inputTitle" class="form-control" placeholder="Title" required autofocus asp-for="Product.Title">
-        <label for="inputPassword">Quantity</label>
+        <label for="inputQuantity">Quantity</label>
         <input type="text" id="inputQuantity" class="form-control" placeholder="Quantity" required asp-for="Product.Quantity">
-        <label for="inputPassword">Price</label>
+        <label for="inputPrice">Price</label>
         <input type="number" step="0.01" id="inputPrice" class="form-control" placeholder="Price" required asp-for="Product.Price">
         @Html.ValidationSummary(false)
         <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
@@ -31,31 +31,40 @@
             <th>
                 <a>Price</a>
             </th>
+            <th>
+                <a>Total price with VAT</a>
+            </th>
+            <th>
+                <a></a>
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.Products)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    <form class="form-deleteProduct" method="post">
-                        <button type="submit" asp-page-handler="delete" asp-route-id="@item.Id">Delete</button>
-                        <button type="submit" asp-page="EditProduct" asp-route-id="@item.Id" asp-route-title="@item.Title" asp-route-price="@item.Price" asp-route-quantity="@item.Quantity">Edit</button>
-                    </form>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Key.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Key.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Key.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Key.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            <td>
+                <form class="form-deleteProduct" method="post">
+                    <button type="submit" asp-page-handler="delete" asp-route-id="@item.Key.Id">Delete</button>
+                    <button type="submit" asp-page="EditProduct" asp-route-id="@item.Key.Id" asp-route-title="@item.Key.Title" asp-route-price="@item.Key.Price" asp-route-quantity="@item.Key.Quantity">Edit</button>
+                </form>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

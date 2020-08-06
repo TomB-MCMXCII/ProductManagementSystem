@@ -11,7 +11,7 @@ namespace ProductManagementUi.Pages
     {
         [BindProperty]
         public Product Product { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public ICollection<KeyValuePair<Product,decimal>> Products { get; set; }
         private IProductService _productService { get; set; }
  
 

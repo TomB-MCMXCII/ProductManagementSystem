@@ -12,7 +12,7 @@ namespace ProductManagementUi.Pages
 {
     public class ProductsModel : PageModel
     {
-        public ICollection<Product> Products { get; set; }
+        public ICollection<KeyValuePair<Product,decimal>> Products { get; set; }
         [BindProperty]
         public Product Product { get; set; }
         private IProductService _productService { get; set; }

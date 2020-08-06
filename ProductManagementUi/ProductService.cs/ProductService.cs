@@ -12,16 +12,25 @@ namespace ProductManagement.Core
     public class ProductService : IProductService
     {
         private IProductManagementDbContext _context;
+        private int vat = 21;
 
         public ProductService(IProductManagementDbContext context)
         {
             _context = context;
         }
 
-        public ICollection<Product> GetProducts()
+        public ICollection<KeyValuePair<Product, decimal>> GetProducts()
         {
             var products = _context.Products.OrderBy(x => x.Id);
-            return products.ToList<Product>();
+            
+            var dict = new Dictionary<Product, decimal>();
+
+            foreach (var p in products)
+            {
+                var vat = CalculateTotalPriceWithVat(p.Price,p.Quantity);
+                dict.Add(p, vat);
+            }
+            return dict;
         }
 
         public void AddProduct(string title, int quantity, decimal price)
@@ -57,6 +66,11 @@ namespace ProductManagement.Core
 
             _context.Products.Update(product);
             _context.SaveChanges();
+        }
+
+        public decimal CalculateTotalPriceWithVat(decimal price,int amount)
+        {
+            return (price * amount) * (1 + vat);
         }
 
     }

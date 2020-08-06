@@ -4,20 +4,24 @@
     ViewData["Title"] = "Products";
 }
 
-<h1>Products</h1>
 <table class="table">
     <thead>
         <tr>
             <th>
-                <a> </a>
+                <a>Id</a>
             </th>
             <th>
-
+                <a>Title</a>
             </th>
             <th>
-                <a> </a>
+                <a>Quantity </a>
             </th>
-            <th></th>
+            <th>
+                <a>Price</a>
+            </th>
+            <th>
+                <a>Total price with VAT</a>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -25,20 +29,19 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
+                    @Html.DisplayFor(modelItem => item.Key.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Title)
+                    @Html.DisplayFor(modelItem => item.Key.Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
+                    @Html.DisplayFor(modelItem => item.Key.Quantity)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Price)
+                    @Html.DisplayFor(modelItem => item.Key.Price)
                 </td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> 
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    @Html.DisplayFor(modelItem => item.Value)
                 </td>
             </tr>
         }
